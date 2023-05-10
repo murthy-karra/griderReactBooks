@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState } from 'react';
+
+import useBooksContext from '../hooks/use-books-context';
 
 function BookEdit({ book, onSubmit }) {
   const [title, setTitle] = useState(book.title);
+
+  const { editBookById } = useBooksContext();
 
   const handleChange = (event) => {
     setTitle(event.target.value);
@@ -9,9 +13,10 @@ function BookEdit({ book, onSubmit }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // onSubmit here is a prop from parent
+    // onSubmit here is a prop from parent closes the editbox
     onSubmit(book.id, title);
-    //console.log(title);
+    // Actually changes the DB
+    editBookById(book.id, title);
   };
 
   return (
